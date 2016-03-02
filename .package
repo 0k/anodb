@@ -1,0 +1,6 @@
+NAME="anodb"
+DESCRIPTION="Database Anonymizing tool"
+EMAIL="valentin.lab@kalysto.org"
+AUTHOR="Valentin Lab"
+AUTHOR_EMAIL="$AUTHOR <$EMAIL>"
+FILES="setup.cfg setup.py CHANGELOG.rst src/anodb/anodb.py"
