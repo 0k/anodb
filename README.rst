@@ -118,6 +118,10 @@ In a unclear future, a few command line arguments could be added so
 that you can provide directly a DSN or the necessary information to
 choose and connect to any database.
 
+You can also check access with ``anodb`` itself:
+
+    anodb check
+
 
 Get help
 --------
