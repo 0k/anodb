@@ -144,7 +144,51 @@ Clear Table
 Script
 ------
 
-    anodb script --help
+The script mode allows you to batch several previous commands in a YML format
+
+This a commented example of such a YML::
+
+    env: |     ## all values defined here will be accessible to python code
+      import hashlib
+      magic_md5 = '$1$'
+      def gen_salt( length=8, symbols=ascii_letters + digits ):
+        seed()
+        return ''.join( sample( symbols, length ) )
+    actions:   ## Batching starts: it's a list of commands
+    - clear:
+      - table:
+        - res_license
+    - replace:
+      - field:
+        - res_partner_contact:
+            name: "'name_%s' % (id, )"
+            last_name: "'last_name_%s' % (id, )"
+            first_name: "'first_name_%s' % (id, )"
+        - res_partner_contact:
+            --where: "nom_marital IS NOT NULL"
+            nom_marital: "'nom_marital_%s' % (id, )"
+        - res_partner_contact:
+            --where: "birthdate IS NOT NULL"
+            birthdate: "'01/01/%s' % birthdate[-4:]"
+        - res_users:
+            --where: "login NOT IN ('admin', 'carif1')"
+            login: "'login_%s' % (id, )"
+            password: encrypt('test')
+            name: "'name_%s' % (id, )"
+            user_email: "'email@valeur.anonyme'"
+        - sit_public_enquete:
+            --where: "enqueteur IS NOT NULL"
+            enqueteur: "'enqueteur_%s' % (id, )"
+        - res_company:
+            --where: "id NOT IN (1, 963)"
+            name: "'company_%s' % (id, )"
+        - sit_public_passeport_formation:
+            name: "'name_%s' % (id, )"
+            organisme: "'organisme_%s' % (id, )"
+
+The script should be launched like this:
+
+    anodb script SCRIPT
 
 
 Contributing
